@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Container } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import useUsers from "../hooks/useUsers";
 
-export default function Listings() {
-  const [users, setUsers] = useState([]);
+function Listings() {
+  const { isLoading, isError, data, error } = useUsers();
 
-  useEffect(() => {
-    axios.get("/users").then((users) => setUsers(users.data));
-  }, []);
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>Error: {error.message}</span>;
+  }
 
   return (
     <Container>
       <ul>
-        {users.map((user, index) => (
+        {data.map((user, index) => (
           <li key={user.id}>
             <Link to={`/listing/${user.id}`}>
               {user.first_name} {user.last_name}
@@ -24,3 +28,5 @@ export default function Listings() {
     </Container>
   );
 }
+
+export default Listings;
