@@ -4,17 +4,17 @@ import useAddress from "../hooks/useAddress";
 import { Container, Typography } from "@material-ui/core";
 
 export default function Details(props) {
-  const id = props.match.params.id;
-  const {
-    isLoading: loadingAddress,
-    isError: errorAddress,
-    data: address,
-  } = useAddress(id);
+  const uid = props.match.params.id;
   const {
     isLoading: loadingUser,
     isError: errorUser,
     data: user,
-  } = useUser(id);
+  } = useUser(uid);
+  const {
+    isLoading: loadingAddress,
+    isError: errorAddress,
+    data: address,
+  } = useAddress(uid);
 
   if (loadingAddress || loadingUser) {
     return <span>Loading...</span>;

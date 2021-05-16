@@ -1,19 +1,21 @@
 import axios from "axios";
-import { useQuery, QueryCache } from "react-query";
+import { useQueryClient, useQuery } from "react-query";
 
-const queryCache = new QueryCache({
-  onError: (error) => {
-    console.log(error);
-  },
-});
+export const fetchUser = (uid) => {
+  return axios.get(`/users/${uid}`).then((res) => res.data[0]);
+};
 
-export const fetchUser = (id) =>
-  axios.get(`/users/${id}`).then((res) => res.data[0]);
+export default function useUser(uid) {
+  const queryClient = useQueryClient();
 
-export default function useUser(id) {
-  return useQuery(["user", id], () => fetchUser(id), {
+  return useQuery(["user", uid], () => fetchUser(uid), {
     initialData: () => {
-      console.log(queryCache);
+      return queryClient
+        .getQueryData("users")
+        ?.find((d) => d.id === parseInt(uid));
+    },
+    initialDataUpdatedAt: () => {
+      return queryClient.getQueryState("users")?.dataUpdatedAt;
     },
   });
 }
