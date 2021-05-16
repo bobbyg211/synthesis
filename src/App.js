@@ -6,8 +6,10 @@ function App() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get("/users.json").then((users) => setUsers(users.data));
-  });
+    axios.get("/users").then((users) => setUsers(users.data));
+  }, []);
+
+  console.log(users);
 
   return (
     <div>
@@ -16,13 +18,7 @@ function App() {
         {users.map((user) => (
           <li className="user">
             <p>
-              <strong>Name:</strong> {user.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {user.email}
-            </p>
-            <p>
-              <strong>City:</strong> {user.address.city}
+              <strong>Name:</strong> {user.first_name} {user.last_name}
             </p>
           </li>
         ))}
