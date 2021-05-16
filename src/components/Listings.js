@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Container, Typography } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 export default function Listings() {
@@ -10,21 +10,17 @@ export default function Listings() {
     axios.get("/users").then((users) => setUsers(users.data));
   }, []);
 
-  console.log(users);
-
   return (
     <Container>
-      <Typography>
-        <ul>
-          {users.map((user, index) => (
-            <li>
-              <Link to={`/listing/${user.id}`}>
-                {user.first_name} {user.last_name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </Typography>
+      <ul>
+        {users.map((user, index) => (
+          <li key={user.id}>
+            <Link to={`/listing/${user.id}`}>
+              {user.first_name} {user.last_name}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </Container>
   );
 }

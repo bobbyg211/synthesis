@@ -6,4 +6,6 @@ router.get("/", usersController.getAllUsers);
 
 router.get("/:id", usersController.getUserById);
 
+router.get("/address/:id", usersController.getUserAddressById);
+
 module.exports = router;

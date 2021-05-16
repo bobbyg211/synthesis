@@ -19,7 +19,18 @@ const getUserById = (req, res) => {
   });
 };
 
+const getUserAddressById = (req, res) => {
+  let sql = "SELECT * FROM usersAddress WHERE user_id = ?";
+  sql = mysql.format(sql, [req.params.id]);
+
+  pool.query(sql, (err, rows) => {
+    if (err) return handleSQLError(res, err);
+    return res.json(rows);
+  });
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
+  getUserAddressById,
 };
