@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router";
-import Listings from "./containers/Listings";
-import Details from "./containers/Details";
+import Listings from "./components/Listings";
+import Details from "./components/Details";
 
 const Router = () => {
   return (

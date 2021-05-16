@@ -1,40 +1,30 @@
-import React from "react";
-import {
-  Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Container, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-export default function Listings(props) {
+export default function Listings() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    axios.get("/users").then((users) => setUsers(users.data));
+  }, []);
+
+  console.log(users);
+
   return (
     <Container>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Address</TableCell>
-            <TableCell>Hours</TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.listings.map((listing, index) => (
-            <TableRow key={listing.id}>
-              <TableCell>
-                <Link to={`/listing/${listing.id}`}>{listing.name}</Link>
-              </TableCell>
-              <TableCell>{listing.description}</TableCell>
-              <TableCell>{listing.address}</TableCell>
-              <TableCell>{listing.hours}</TableCell>
-            </TableRow>
+      <Typography>
+        <ul>
+          {users.map((user, index) => (
+            <li>
+              <Link to={`/listing/${user.id}`}>
+                {user.first_name} {user.last_name}
+              </Link>
+            </li>
           ))}
-        </TableBody>
-      </Table>
+        </ul>
+      </Typography>
     </Container>
   );
 }
