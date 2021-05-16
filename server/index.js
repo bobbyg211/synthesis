@@ -1,6 +1,12 @@
 const path = require("path");
+require("dotenv").config();
 const express = require("express");
+const bodyParser = require("body-parser");
+const usersRouter = require("./routers/users");
 const app = express(); // create express app
+
+app.use(bodyParser.json());
+app.use("/users", usersRouter);
 
 // add middlewares
 app.use(express.static(path.join(__dirname, "..", "build")));
