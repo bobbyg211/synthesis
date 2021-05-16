@@ -5,18 +5,18 @@ const bodyParser = require("body-parser");
 const usersRouter = require("./routers/users");
 const app = express(); // create express app
 
-app.use(bodyParser.json());
-app.use("/users", usersRouter);
-
-// add middlewares
+// react app files
 app.use(express.static(path.join(__dirname, "..", "build")));
-app.use(express.static("public"));
+
+// express routes
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/users", usersRouter);
 
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "..", "build", "index.html"));
 });
 
-// start express server on port 3000
-app.listen(3000, () => {
-  console.log("server started on port 3000");
+app.listen(5000, () => {
+  console.log("server started on port 5000");
 });
