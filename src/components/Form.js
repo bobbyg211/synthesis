@@ -1,34 +1,43 @@
 import React, { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
+import { useQueryClient, useMutation } from "react-query";
 import useCreateUser from "../hooks/useCreateUser";
 import useUsers from "../hooks/useUsers";
 import axios from "axios";
 
 export default function Form() {
-  const createUser = useCreateUser();
-  // ============================
+  const queryClient = useQueryClient();
+
   const [firstName, setFirst] = useState("");
   const [lastName, setLast] = useState("");
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const mutation = useMutation(
+    (e) => {
+      e.preventDefault();
+      return axios
+        .post("/users", new FormData(e.target))
+        .then((res) => res.data);
+    },
+    {
+      onSuccess: (newUser) => {
+        console.log(newUser);
+        queryClient.setQueryData("users", (currentUsers) => [
+          ...currentUsers,
+          newUser,
+        ]);
+        // queryClient.invalidateQueries("users");
+      },
+    }
+  );
 
-    const userData = { firstName, lastName };
-
-    console.log(userData);
-
-    axios.post("/users", userData).then(() => {});
-  };
-
-  // ============================
   return (
     <div>
-      <form className="add-new-user" onSubmit={onSubmit}>
+      <form className="add-new-user" onSubmit={mutation.mutate}>
         <TextField
           required
           onChange={(e) => setFirst(e.target.value)}
           value={firstName}
-          name="first"
+          name="firstName"
           label="First Name"
           type="text"
         />
@@ -36,7 +45,7 @@ export default function Form() {
           required
           onChange={(e) => setLast(e.target.value)}
           value={lastName}
-          name="last"
+          name="lastName"
           label="Last Name"
           type="text"
         />

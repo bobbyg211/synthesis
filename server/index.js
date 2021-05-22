@@ -3,7 +3,9 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const usersRouter = require("./routers/users");
-const app = express(); // create express app
+var multer = require("multer");
+var upload = multer();
+const app = express();
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Synthesis server!");
@@ -11,6 +13,9 @@ app.get("/", (req, res) => {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(upload.array());
+app.use(express.static("public"));
+
 app.use("/users", usersRouter);
 
 app.listen(5000, () => {

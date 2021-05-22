@@ -1,10 +1,8 @@
 import axios from "axios";
 import { useQueryClient, useMutation } from "react-query";
 
-export default function useCreateUser(event) {
-  // const queryClient = useQueryClient();
-  // const {}
-  // (values) => axios.post("/users", values).then((res) => res.data);
+export default function useCreateUser(values) {
+  return axios.post("/users", values);
 }
 
 // export default function useCreateUser() {
