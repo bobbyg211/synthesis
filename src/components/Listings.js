@@ -1,21 +1,19 @@
 import React from "react";
-import { Container } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Form from "./Form";
 import useUsers from "../hooks/useUsers";
 
 function Listings() {
-  const { isLoading, isError, data, error } = useUsers();
+  const { isLoading, isError, data } = useUsers();
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    return <span>Error: {error.message}</span>;
+  if (isLoading || isError) {
+    return null;
   }
 
   return (
     <Container>
+      <Typography variant="h3">USERS</Typography>
       <ul>
         {data.map((user, index) => (
           <li key={user.id}>
@@ -25,6 +23,7 @@ function Listings() {
           </li>
         ))}
       </ul>
+      <Form />
     </Container>
   );
 }

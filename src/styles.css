@@ -1,0 +1,11 @@
+.loader {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.loader.active {
+  opacity: 1;
+}

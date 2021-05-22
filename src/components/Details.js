@@ -16,12 +16,8 @@ export default function Details(props) {
     data: address,
   } = useAddress(uid);
 
-  if (loadingAddress || loadingUser) {
-    return <span>Loading...</span>;
-  }
-
-  if (errorAddress || errorUser) {
-    return <span>Error</span>;
+  if (loadingAddress || loadingUser || errorAddress || errorUser) {
+    return null;
   }
 
   return (
