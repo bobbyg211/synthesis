@@ -2,24 +2,19 @@ import axios from "axios";
 import { useQueryClient, useMutation } from "react-query";
 
 export default function useCreateUser(values) {
-  return axios.post("/users", values);
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    (e) => {
+      e.preventDefault();
+      return axios
+        .post("/users", new FormData(e.target))
+        .then((res) => res.data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("users");
+      },
+    }
+  );
 }
-
-// export default function useCreateUser() {
-//   const queryClient = useQueryClient();
-
-//   return useMutation(
-//     (values) => axios.post("/users", values).then((res) => res.data),
-//     {
-//       onMutate: (newUser) => {
-//         const currentUsers = queryClient.getQueryData("users");
-
-//         if (currentUsers) {
-//           queryClient.setQueryData("users", (current) => [...current, newUser]);
-//         }
-
-//         return () => queryClient.setQueryData("users", currentUsers);
-//       },
-//     }
-//   );
-// }
