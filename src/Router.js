@@ -1,10 +1,13 @@
 import React from "react";
 import "./styles.css";
 import { Switch, Route, Redirect } from "react-router";
-import Listings from "./components/Listings";
-import Details from "./components/Details";
 import { CircularProgress } from "@material-ui/core";
 import { useIsFetching } from "react-query";
+import Navigation from "./components/Navigation";
+import Home from "./screens/Home";
+import Journals from "./screens/Journals";
+import Listings from "./screens/Listings";
+import Details from "./screens/Details";
 
 const Router = () => {
   const isFetching = useIsFetching();
@@ -13,10 +16,12 @@ const Router = () => {
       <CircularProgress
         className={isFetching > 0 ? "loader active" : "loader"}
       />
+      <Navigation />
       <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/journals" component={Journals} />
         <Route exact path="/listing" component={Listings} />
         <Route path="/listing/:id" component={Details} />
-        <Redirect from="/" to="/listing"></Redirect>
       </Switch>
     </div>
   );

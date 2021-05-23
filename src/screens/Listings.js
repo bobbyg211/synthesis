@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import Form from "./Form";
+import Form from "../components/temps/Form";
 import useUsers from "../hooks/useUsers";
 
 function Listings() {

@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField, Button } from "@material-ui/core";
-import useCreateUser from "../hooks/useCreateUser";
+import useCreateUser from "../../hooks/useCreateUser";
 
 export default function Form() {
   const createUser = useCreateUser();
@@ -10,6 +10,7 @@ export default function Form() {
       <form className="add-new-user" onSubmit={createUser.mutate}>
         <TextField required name="firstName" label="First Name" type="text" />
         <TextField required name="lastName" label="Last Name" type="text" />
+        <TextField required name="email" label="Email" type="email" />
         <Button type="submit" variant="contained" color="primary">
           {createUser.isLoading
             ? "Saving..."

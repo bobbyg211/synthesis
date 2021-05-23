@@ -19,20 +19,10 @@ const getUserById = (req, res) => {
   });
 };
 
-const getUserAddressById = (req, res) => {
-  let sql = "SELECT * FROM usersAddress WHERE user_id = ?";
-  sql = mysql.format(sql, [req.params.id]);
-
-  pool.query(sql, (err, rows) => {
-    if (err) return handleSQLError(res, err);
-    return res.json(rows);
-  });
-};
-
 const createUser = (req, res) => {
-  const { firstName, lastName } = req.body;
-  let sql = "INSERT INTO users (first_name, last_name) VALUES (?, ?)";
-  sql = mysql.format(sql, [firstName, lastName]);
+  const { firstName, lastName, email } = req.body;
+  let sql = "INSERT INTO users (first_name, last_name, email) VALUES (?, ?, ?)";
+  sql = mysql.format(sql, [firstName, lastName, email]);
 
   pool.query(sql, (err, results) => {
     if (err) return handleSQLError(res, err);
@@ -41,9 +31,10 @@ const createUser = (req, res) => {
 };
 
 const updateUserById = (req, res) => {
-  const { firstName, lastName } = req.body;
-  let sql = "UPDATE users SET first_name = ?, last_name = ? WHERE id = ?";
-  sql = mysql.format(sql, [firstName, lastName, req.params.id]);
+  const { firstName, lastName, email } = req.body;
+  let sql =
+    "UPDATE users SET first_name = ?, last_name = ?, email = ? WHERE id = ?";
+  sql = mysql.format(sql, [firstName, lastName, email, req.params.id]);
 
   pool.query(sql, (err, results) => {
     if (err) return handleSQLError(res, err);
@@ -51,22 +42,20 @@ const updateUserById = (req, res) => {
   });
 };
 
-const deleteUserById = (req, res) => {
-  let sql =
-    "DELETE users, usersAddress FROM users INNER JOIN usersAddress on users.id = usersAddress.user_id WHERE users.id = ?";
-  sql = mysql.format(sql, [req.params.first_name]);
+// const deleteUserById = (req, res) => {
+//   let sql =
+//     "DELETE users, usersAddress FROM users INNER JOIN usersAddress on users.id = usersAddress.user_id WHERE users.id = ?";
+//   sql = mysql.format(sql, [req.params.first_name]);
 
-  pool.query(sql, (err, results) => {
-    if (err) return handleSQLError(res, err);
-    return res.json({ message: `Deleted ${results.affectedRows} user(s)` });
-  });
-};
+//   pool.query(sql, (err, results) => {
+//     if (err) return handleSQLError(res, err);
+//     return res.json({ message: `Deleted ${results.affectedRows} user(s)` });
+//   });
+// };
 
 module.exports = {
   getAllUsers,
   getUserById,
-  getUserAddressById,
   createUser,
   updateUserById,
-  deleteUserById,
 };

@@ -1,6 +1,18 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Loader */
+
 .loader {
   position: fixed;
-  top: 20px;
+  top: 80px;
   right: 20px;
   opacity: 0;
   transition: opacity 0.5s ease;
@@ -9,3 +21,31 @@
 .loader.active {
   opacity: 1;
 }
+
+/* Navigation */
+
+.navigation {
+  margin-bottom: 50px;
+}
+
+.navigation .logo {
+  max-width: 40px;
+  margin-right: 10px;
+}
+
+.navigation .nav-list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style-type: none;
+}
+
+.navigation .nav-list .nav-list-item {
+  margin-left: 20px;
+}
+
+.navigation .nav-list .nav-list-item a {
+  color: white;
+}
+
+/* Form modal */
