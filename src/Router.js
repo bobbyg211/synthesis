@@ -1,13 +1,14 @@
 import React from "react";
 import "./styles.css";
-import { Switch, Route, Redirect } from "react-router";
+import { Switch, Route } from "react-router";
+import ProtectedRoute from "./auth/ProtectedRoute";
 import { CircularProgress } from "@material-ui/core";
 import { useIsFetching } from "react-query";
 import Navigation from "./components/Navigation";
 import Home from "./screens/Home";
 import Journals from "./screens/Journals";
-import Listings from "./screens/Listings";
-import Details from "./screens/Details";
+import Profile from "./screens/Profile";
+import ExternalAPI from "./screens/ExternalAPI";
 
 const Router = () => {
   const isFetching = useIsFetching();
@@ -19,9 +20,9 @@ const Router = () => {
       <Navigation />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/journals" component={Journals} />
-        <Route exact path="/listing" component={Listings} />
-        <Route path="/listing/:id" component={Details} />
+        <ProtectedRoute exact path="/journals" component={Journals} />
+        <ProtectedRoute exact path="/profile" component={Profile} />
+        <ProtectedRoute exact path="/external-api" component={ExternalAPI} />
       </Switch>
     </div>
   );
