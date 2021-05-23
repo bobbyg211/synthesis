@@ -10,8 +10,11 @@ import {
   Typography,
 } from "@material-ui/core";
 
+import Chip from "@material-ui/core/Chip";
+
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
   const [meds, setMeds] = useState([]);
 
   const handleClickOpen = () => {
@@ -20,16 +23,47 @@ export default function FormDialog() {
 
   const handleClose = () => {
     setOpen(false);
+    setMeds([]);
   };
 
   const handleAddMed = (e) => {
     e.preventDefault();
     setMeds([...meds, e.target[0].value]);
+    document.querySelector(".add-med input").value = "";
+  };
+
+  const handleDelete = (med) => () => {
+    setMeds((meds) => meds.filter((meds) => meds !== med));
+  };
+
+  const handleCreate = (title, meds) => () => {
+    let today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    const yyyy = today.getFullYear();
+
+    today = yyyy + "/" + mm + "/" + dd;
+
+    const journalObj = {
+      title: title,
+      create_date: today,
+      user_id: "",
+    };
+
+    console.log(journalObj);
+
+    for (let med of meds) {
+      const medicationObj = {
+        medication: med,
+        journal_id: "",
+      };
+
+      console.log(medicationObj);
+    }
   };
 
   return (
     <div>
-      {console.log(meds)}
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         + ADD
       </Button>
@@ -37,6 +71,7 @@ export default function FormDialog() {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
+        className="form-dialog"
       >
         <DialogTitle id="form-dialog-title">Create Journal</DialogTitle>
         <DialogContent>
@@ -47,12 +82,19 @@ export default function FormDialog() {
             required
             name="journalName"
             label="Journal Name"
+            onChange={(e) => setTitle(e.target.value)}
             fullWidth={true}
           />
           <Typography variant="h5">Medications</Typography>
-          <ul>
+          <ul className="med-list">
             {meds.map((med, index) => (
-              <li key={index}>{med}</li>
+              <li key={index}>
+                <Chip
+                  label={med}
+                  onDelete={handleDelete(med)}
+                  color="primary"
+                />
+              </li>
             ))}
           </ul>
           <form className="add-med" onSubmit={handleAddMed}>
@@ -71,7 +113,11 @@ export default function FormDialog() {
           <Button variant="outlined" color="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button type="submit" variant="outlined" color="primary">
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleCreate(title, meds)}
+          >
             Create
           </Button>
         </DialogActions>
