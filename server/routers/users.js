@@ -1,8 +1,9 @@
 const express = require("express");
 const usersController = require("../controllers/users");
 const router = express.Router();
+const { checkJwt } = require("../auth/check-jwt");
 
-router.get("/", usersController.getAllUsers);
+router.get("/", checkJwt, usersController.getAllUsers);
 
 router.get("/:id", usersController.getUserById);
 
