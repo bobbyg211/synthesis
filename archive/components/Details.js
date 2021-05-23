@@ -1,5 +1,6 @@
 import React from "react";
 import useUser from "../hooks/useUser";
+import useAddress from "../hooks/useAddress";
 import { Container, Typography } from "@material-ui/core";
 
 export default function Details(props) {
@@ -9,8 +10,13 @@ export default function Details(props) {
     isError: errorUser,
     data: user,
   } = useUser(uid);
+  const {
+    isLoading: loadingAddress,
+    isError: errorAddress,
+    data: address,
+  } = useAddress(uid);
 
-  if (loadingUser || errorUser) {
+  if (loadingAddress || loadingUser || errorAddress || errorUser) {
     return null;
   }
 
@@ -19,7 +25,7 @@ export default function Details(props) {
       <Typography variant="h4">
         {user.first_name} {user.last_name}
       </Typography>
-      <Typography variant="h5">{user.email}</Typography>
+      <Typography variant="h5">{address.street}</Typography>
     </Container>
   );
 }
