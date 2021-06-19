@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = () => {
   const { user } = useAuth0();
-  const { name, picture, email } = user;
+  const { name, picture, email, sub, logins_count } = user;
 
   return (
     <div>
@@ -18,7 +18,7 @@ const Profile = () => {
         <div className="col-md text-center text-md-left">
           <h2>{name}</h2>
           <p className="lead text-muted">{email}</p>
-          <p>{user.identities}</p>
+          <p>{logins_count}</p>
         </div>
       </div>
       <div className="row">

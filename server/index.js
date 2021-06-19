@@ -5,6 +5,7 @@ const { clientOrigins, serverPort } = require("./config/env.dev");
 const { messagesRouter } = require("./messages/messages.router");
 const bodyParser = require("body-parser");
 const usersRouter = require("./routers/users");
+const journalsRouter = require("./routers/journals");
 const multer = require("multer");
 const upload = multer();
 
@@ -32,6 +33,7 @@ app.use(function (err, req, res, next) {
 });
 
 app.use("/users", usersRouter);
+app.use("/journals", journalsRouter);
 
 app.listen(serverPort, () => {
   console.log(`server started on port ${serverPort}`);

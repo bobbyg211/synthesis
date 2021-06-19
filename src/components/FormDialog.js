@@ -9,13 +9,16 @@ import {
   DialogTitle,
   Typography,
 } from "@material-ui/core";
-
 import Chip from "@material-ui/core/Chip";
+import { useAuth0 } from "@auth0/auth0-react";
+import useCreateJournal from "../hooks/useCreateJournal";
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [meds, setMeds] = useState([]);
+  const { user } = useAuth0();
+  const createJournal = useCreateJournal({ title: title, user_id: user.sub });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,16 +40,8 @@ export default function FormDialog() {
   };
 
   const handleCreate = (title, meds) => () => {
-    let today = new Date();
-    const dd = String(today.getDate()).padStart(2, "0");
-    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    const yyyy = today.getFullYear();
-
-    today = yyyy + "/" + mm + "/" + dd;
-
     const journalObj = {
       title: title,
-      create_date: today,
       user_id: "",
     };
 
@@ -116,7 +111,13 @@ export default function FormDialog() {
           <Button
             variant="outlined"
             color="primary"
-            onClick={handleCreate(title, meds)}
+            onClick={() => {
+              createJournal.mutate();
+              if (title) {
+                handleClose();
+              }
+              setTitle();
+            }}
           >
             Create
           </Button>
