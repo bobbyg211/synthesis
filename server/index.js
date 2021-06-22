@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const { clientOrigins, serverPort } = require("./config/env.dev");
-const { messagesRouter } = require("./messages/messages.router");
 const bodyParser = require("body-parser");
 const usersRouter = require("./routers/users");
 const journalsRouter = require("./routers/journals");
@@ -22,10 +21,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload.array());
 app.use(express.static("public"));
-
-app.use("/api", apiRouter);
-
-apiRouter.use("/messages", messagesRouter);
 
 app.use(function (err, req, res, next) {
   console.log(err);

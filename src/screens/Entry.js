@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import useEntry from "../../src/hooks/useEntry";
 import useNotes from "../../src/hooks/useNotes";
 import AddNote from "../components/AddNote";
@@ -24,6 +25,7 @@ export default function Entry(props) {
 
   return (
     <Container className="journal" maxWidth="sm">
+      <Link to={`/journals/${jid}`}>Back to all entries</Link>
       <Typography variant="h4">{entryData.create_date}</Typography>
       <ul>
         {notesData.map((note, index) => (

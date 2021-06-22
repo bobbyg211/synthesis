@@ -6,7 +6,7 @@ export default function useEntry(jid, eid) {
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const { getAccessTokenSilently } = useAuth0();
 
-  return useQuery("entries", async () => {
+  return useQuery(["entry", eid], async () => {
     const token = await getAccessTokenSilently();
 
     return await axios

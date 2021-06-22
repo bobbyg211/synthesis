@@ -5,9 +5,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 export default function useJournal(id) {
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const { getAccessTokenSilently } = useAuth0();
-  console.log(true);
 
-  return useQuery("journal", async () => {
+  return useQuery(["journal", id], async () => {
     const token = await getAccessTokenSilently();
 
     return await axios

@@ -27,10 +27,9 @@ export default function Journal(props) {
     return null;
   }
 
-  console.log(entriesData);
-
   return (
     <Container className="journal" maxWidth="sm">
+      <Link to={`/journals/`}>Back to all journals</Link>
       <Typography variant="h4">{journalData.title}</Typography>
       <Typography variant="h5">{journalData.create_date}</Typography>
       <AddEntry journalID={id} />
