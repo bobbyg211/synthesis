@@ -1,35 +1,29 @@
 import React from "react";
 import { Container, Typography } from "@material-ui/core";
-import FormDialog from "../components/FormDialog";
+import { Link } from "react-router-dom";
+import AddJournal from "../components/AddJournal";
 import useJournals from "../../src/hooks/useJournals";
-import axios from "axios";
-import { useQuery } from "react-query";
-import { useAuth0 } from "@auth0/auth0-react";
-
-function test() {
-  return "test";
-}
 
 export default function Journals() {
-  const { isLoading, isError, data } = useQuery("journals", test);
+  const { isLoading, isError, data } = useJournals();
 
-  console.log(data);
-
-  // if (isLoading || isError) {
-  //   return null;
-  // }
+  if (isLoading || isError) {
+    return null;
+  }
 
   return (
     <Container>
       <Typography variant="h2">Journals</Typography>
-      {/* <ul>
+      <ul>
         {data.map((journal, index) => (
           <li key={journal.id}>
-            {journal.title} {journal.create_date}
+            <Link to={`/journals/${journal.id}`}>
+              {journal.title} {journal.create_date}
+            </Link>
           </li>
         ))}
-      </ul> */}
-      <FormDialog />
+      </ul>
+      <AddJournal />
     </Container>
   );
 }

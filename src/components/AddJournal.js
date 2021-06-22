@@ -13,7 +13,7 @@ import Chip from "@material-ui/core/Chip";
 import { useAuth0 } from "@auth0/auth0-react";
 import useCreateJournal from "../hooks/useCreateJournal";
 
-export default function FormDialog() {
+export default function AddJournal() {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [meds, setMeds] = useState([]);

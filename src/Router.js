@@ -7,6 +7,7 @@ import { useIsFetching } from "react-query";
 import Navigation from "./components/Navigation";
 import Home from "./screens/Home";
 import Journals from "./screens/Journals";
+import Journal from "./screens/Journal";
 import Profile from "./screens/Profile";
 import ExternalAPI from "./screens/ExternalAPI";
 
@@ -20,7 +21,8 @@ const Router = () => {
       <Navigation />
       <Switch>
         <Route exact path="/" component={Home} />
-        <ProtectedRoute exact path="/journals" component={Journals} />
+        <Route exact path="/journals" component={Journals} />
+        <Route exact path="/journals/:id" component={Journal} />
         <ProtectedRoute exact path="/profile" component={Profile} />
         <ProtectedRoute exact path="/external-api" component={ExternalAPI} />
       </Switch>
