@@ -38,7 +38,7 @@ export default function Journal(props) {
       <ul>
         {entriesData.map((entry, index) => (
           <li key={entry.id}>
-            <Link to={`/journals/${id}/entries/${entry.id}`}>
+            <Link to={`/journals/${id}/entry/${entry.id}`}>
               {entry.create_date}
             </Link>
           </li>

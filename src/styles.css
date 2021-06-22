@@ -90,3 +90,9 @@ body {
 .form-dialog .med-list li {
   margin: 5px;
 }
+
+/* Notes */
+
+form.add-note > div {
+  margin-bottom: 20px;
+}

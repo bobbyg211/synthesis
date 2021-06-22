@@ -2,7 +2,7 @@ import axios from "axios";
 import { useQueryClient, useMutation } from "react-query";
 import { useAuth0 } from "@auth0/auth0-react";
 
-export default function useCreateEntry(values) {
+export default function useCreateUser(values) {
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const { getAccessTokenSilently } = useAuth0();
   const queryClient = useQueryClient();
@@ -12,7 +12,7 @@ export default function useCreateEntry(values) {
       const token = await getAccessTokenSilently();
 
       return await axios
-        .post(`${serverUrl}/journals/:id/entry`, values, {
+        .post(`${serverUrl}/journals/:jid/entry/:eid`, values, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -21,7 +21,7 @@ export default function useCreateEntry(values) {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("entries");
+        queryClient.invalidateQueries("notes");
       },
     }
   );

@@ -29,6 +29,26 @@ const getEntriesById = (req, res) => {
   });
 };
 
+const getEntryById = (req, res) => {
+  let sql = "SELECT * FROM entries WHERE id = ? AND journal_id = ?";
+  sql = mysql.format(sql, [req.params.eid, req.params.jid]);
+
+  pool.query(sql, (err, rows) => {
+    if (err) return handleSQLError(res, err);
+    return res.json(rows);
+  });
+};
+
+const getNotesByEntryId = (req, res) => {
+  let sql = "SELECT * FROM notes WHERE entry_id = ?";
+  sql = mysql.format(sql, [req.params.eid]);
+
+  pool.query(sql, (err, rows) => {
+    if (err) return handleSQLError(res, err);
+    return res.json(rows);
+  });
+};
+
 const createJournal = (req, res) => {
   const { title, user_id } = req.body;
   let sql = "INSERT INTO journals (title, user_id) VALUES (?, ?)";
@@ -51,10 +71,24 @@ const createEntry = (req, res) => {
   });
 };
 
+const createNote = (req, res) => {
+  const { title, description, entry_id } = req.body;
+  let sql = "INSERT INTO notes (title, description, entry_id) VALUES (?, ?, ?)";
+  sql = mysql.format(sql, [title, description, entry_id]);
+
+  pool.query(sql, (err, results) => {
+    if (err) return handleSQLError(res, err);
+    return res.json({ newId: results.insertId });
+  });
+};
+
 module.exports = {
   getJournals,
   getJournalById,
   getEntriesById,
+  getEntryById,
+  getNotesByEntryId,
   createJournal,
   createEntry,
+  createNote,
 };
