@@ -10,7 +10,6 @@ import Journals from "./screens/Journals";
 import Journal from "./screens/Journal";
 import Entry from "./screens/Entry";
 import Profile from "./screens/Profile";
-import ExternalAPI from "./screens/ExternalAPI";
 
 const Router = () => {
   const isFetching = useIsFetching();
@@ -26,7 +25,6 @@ const Router = () => {
         <Route exact path="/journals/:id" component={Journal} />
         <Route exact path="/journals/:jid/entry/:eid" component={Entry} />
         <ProtectedRoute exact path="/profile" component={Profile} />
-        <ProtectedRoute exact path="/external-api" component={ExternalAPI} />
       </Switch>
     </div>
   );

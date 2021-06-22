@@ -26,11 +26,6 @@ export default function Navigation() {
               <Link to="/journals">Journals</Link>
             </li>
           )}
-          {user && (
-            <li className="nav-list-item">
-              <Link to="/external-api">API</Link>
-            </li>
-          )}
           <li className="nav-list-item">
             <AuthenticationButton />
           </li>
