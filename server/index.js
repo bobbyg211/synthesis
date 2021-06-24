@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const cors = require("cors");
 const helmet = require("helmet");
 const { clientOrigins, serverPort } = require("./config/env.dev");
@@ -9,7 +10,6 @@ const multer = require("multer");
 const upload = multer();
 
 const app = express();
-const apiRouter = express.Router();
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Synthesis server!");
@@ -20,7 +20,12 @@ app.use(cors({ origin: clientOrigins }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload.array());
-app.use(express.static("public"));
+
+app.use(express.static(path.join(__dirname, "client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
 
 app.use(function (err, req, res, next) {
   console.log(err);
