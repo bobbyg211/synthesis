@@ -35,6 +35,6 @@ app.use(function (err, req, res, next) {
 app.use("/users", usersRouter);
 app.use("/journals", journalsRouter);
 
-app.listen(serverPort, () => {
-  console.log(`server started on port ${serverPort}`);
+app.listen(process.env.SERVER_PORT || 5000, () => {
+  console.log(`server started on port ${process.env.SERVER_PORT}`);
 });
