@@ -15,17 +15,17 @@ const app = express();
 //   res.send("Welcome to the Synthesis server!");
 // });
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 app.use(cors({ origin: clientOrigins }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload.array());
 
 app.use(express.static(path.join(__dirname, "client/build")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/build/index.html"));
-});
 
 app.use(function (err, req, res, next) {
   console.log(err);
@@ -34,6 +34,10 @@ app.use(function (err, req, res, next) {
 
 app.use("/users", usersRouter);
 app.use("/journals", journalsRouter);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
 
 app.listen(process.env.PORT || 5000, () => {
   console.log(`server started on port ${process.env.PORT}`);
