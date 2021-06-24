@@ -11,9 +11,9 @@ const upload = multer();
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Welcome to the Synthesis server!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Welcome to the Synthesis server!");
+// });
 
 app.use(helmet());
 app.use(cors({ origin: clientOrigins }));
