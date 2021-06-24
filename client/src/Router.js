@@ -21,7 +21,7 @@ const Router = () => {
       <Navigation />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/journals" component={Journals} />
+        <ProtectedRoute exact path="/journals" component={Journals} />
         <Route exact path="/journals/:id" component={Journal} />
         <Route exact path="/journals/:jid/entry/:eid" component={Entry} />
         <ProtectedRoute exact path="/profile" component={Profile} />
