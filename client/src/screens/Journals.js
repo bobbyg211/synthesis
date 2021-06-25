@@ -27,15 +27,6 @@ export default function Journals() {
               <Link className="edit" to={`/journals/${journal.id}`}>
                 <CreateIcon></CreateIcon>
               </Link>
-              <Link
-                className="delete"
-                onClick={() => {
-                  setJournalId(journal.id);
-                  deleteJournal.mutate();
-                }}
-              >
-                <DeleteIcon></DeleteIcon>
-              </Link>
             </div>
           </li>
         ))}
