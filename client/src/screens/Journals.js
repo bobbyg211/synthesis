@@ -6,10 +6,12 @@ import { Link } from "react-router-dom";
 import AddJournal from "../components/AddJournal";
 import useJournals from "../hooks/useJournals";
 import useDeleteJournal from "../hooks/useDeleteJournal";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Journals() {
+  const { user } = useAuth0();
   const [journalId, setJournalId] = useState();
-  const { isLoading, isError, data } = useJournals();
+  const { isLoading, isError, data } = useJournals({ user_id: user.sub });
   const deleteJournal = useDeleteJournal({ id: journalId });
 
   if (isLoading || isError) {

@@ -3,15 +3,19 @@ const pool = require("../sql/connection");
 const { handleSQLError } = require("../sql/error");
 
 const getJournals = (req, res) => {
-  pool.query("SELECT * FROM journals", (err, rows) => {
+  const { user_id } = req.query;
+  let sql = "SELECT * FROM journals WHERE user_id = ?";
+  sql = mysql.format(sql, [user_id]);
+
+  pool.query(sql, (err, rows) => {
     if (err) return handleSQLError(res, err);
     return res.json(rows);
   });
 };
 
 const getJournalById = (req, res) => {
-  let sql = "SELECT * FROM journals WHERE id = ?";
-  sql = mysql.format(sql, [req.params.id]);
+  let sql = "SELECT * FROM journals WHERE id = ? AND user_id = ?";
+  sql = mysql.format(sql, [req.params.id, req.query.user_id]);
 
   pool.query(sql, (err, rows) => {
     if (err) return handleSQLError(res, err);

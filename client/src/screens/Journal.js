@@ -7,19 +7,21 @@ import { Link } from "react-router-dom";
 import useJournal from "../../src/hooks/useJournal";
 import useEntries from "../../src/hooks/useEntries";
 import AddEntry from "../components/AddEntry";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Journal(props) {
+  const { user } = useAuth0();
   const id = props.match.params.id;
   const {
     isLoading: journalIsLoading,
     isError: journalIsError,
     data: journalData,
-  } = useJournal(id);
+  } = useJournal({ id: id, user_id: user.sub });
   const {
     isLoading: entriesIsLoading,
     isError: entiresIsError,
     data: entriesData,
-  } = useEntries(id);
+  } = useEntries({ id: id, user_id: user.sub });
 
   if (
     journalIsLoading ||

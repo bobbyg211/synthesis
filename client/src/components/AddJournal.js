@@ -80,7 +80,7 @@ export default function AddJournal() {
             onChange={(e) => setTitle(e.target.value)}
             fullWidth={true}
           />
-          <Typography variant="h5">Medications</Typography>
+          {/* <Typography variant="h5">Medications</Typography>
           <ul className="med-list">
             {meds.map((med, index) => (
               <li key={index}>
@@ -102,7 +102,7 @@ export default function AddJournal() {
             <Button type="submit" variant="outlined" color="primary">
               + ADD
             </Button>
-          </form>
+          </form> */}
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" color="secondary" onClick={handleClose}>
