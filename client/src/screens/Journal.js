@@ -92,9 +92,6 @@ export default function Journal(props) {
               <Link className="edit" to={`/journals/${id}/entry/${entry.id}`}>
                 <CreateIcon></CreateIcon>
               </Link>
-              <Link className="delete">
-                <DeleteIcon></DeleteIcon>
-              </Link>
             </div>
           </li>
         ))}
