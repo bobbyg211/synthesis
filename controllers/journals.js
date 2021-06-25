@@ -82,6 +82,16 @@ const createNote = (req, res) => {
   });
 };
 
+const deleteJournal = (req, res) => {
+  let sql = "DELETE FROM journals WHERE id = ?";
+  sql = mysql.format(sql, [req.body.id]);
+
+  pool.query(sql, (err, results) => {
+    if (err) return handleSQLError(res, err);
+    return res.json({ message: `Deleted ${results.affectedRows} journal` });
+  });
+};
+
 module.exports = {
   getJournals,
   getJournalById,
@@ -91,4 +101,5 @@ module.exports = {
   createJournal,
   createEntry,
   createNote,
+  deleteJournal,
 };

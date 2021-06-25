@@ -2,7 +2,7 @@ import axios from "axios";
 import { useQueryClient, useQuery } from "react-query";
 import { useAuth0 } from "@auth0/auth0-react";
 
-export default function useJournals(id) {
+export default function useEntries(id) {
   const queryClient = useQueryClient();
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const { getAccessTokenSilently } = useAuth0();

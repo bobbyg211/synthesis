@@ -23,4 +23,6 @@ router.post("/:id/entry", checkJwt, journalsController.createEntry);
 
 router.post("/", checkJwt, journalsController.createJournal);
 
+router.delete("/", checkJwt, journalsController.deleteJournal);
+
 module.exports = router;
